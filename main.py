@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 import uvicorn
-from backend.auth import auth_router
+from backend.auth.endpoints.tmp_endpoints import router
 
 
 app = FastAPI()
 app.include_router(
-    auth_router.router,
+    router,
     prefix="/auth",
 )
 
