@@ -1,0 +1,28 @@
+services:
+  user-db:
+    container_name: user-db
+    image: postgres:14.6
+    ports:
+      - "5432:5432"
+    expose:
+      - 5432
+    environment:
+      POSTGRES_DB: user
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: user
+      PGDATA: "/var/lib/postgresql/data"
+    volumes:
+      - .:/docker-entrypoint-initdb.d
+
+  web:
+    container_name: fastapi
+  build:
+    context: .
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    volumes:
+      - .:/app
+    depends_on:
+      - user-db
