@@ -7,7 +7,9 @@ import AuthButton from '../AuthButton/AuthButton.jsx';
 const AuthForm = () => {
 
     const [password, setPassword] = useState('')
+    const [password2, setPassword2] = useState('')
     const [login, setLogin] = useState('')
+    const [email, setEmail] = useState('')
     const [isLogin, setIsLogin] = useState(true)
 
     const maskText = (text) => {
@@ -35,6 +37,20 @@ const AuthForm = () => {
                     value={password}
                     onChange={e => setPassword(maskText(e.target.value))}
                 />
+                {!isLogin ? <>
+                                <AuthInput
+                                    type='text'
+                                    text='Подтверждение пароля'
+                                    value={password2}
+                                    onChange={e => setPassword2(maskText(e.target.value))}
+                                />
+                                <AuthInput
+                                    type='text'
+                                    text='E-mail'
+                                    value={login}
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                            </> : null} 
                 <AuthButton onClick={(e) => e.preventDefault()}>
                     {isLogin ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
                 </AuthButton>
