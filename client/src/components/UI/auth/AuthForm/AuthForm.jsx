@@ -25,32 +25,42 @@ const AuthForm = () => {
         <div className={cl.authForm}>
             <form className={cl.authForm}>
                 <AuthHeader/>
-                <AuthInput
-                    type='text'
-                    text='Имя пользователя'
-                    value={login}
-                    onChange={e => setLogin(e.target.value)}
-                />
-                <AuthInput
-                    type='text'
-                    text='Пароль'
-                    value={password}
-                    onChange={e => setPassword(maskText(e.target.value))}
-                />
-                {!isLogin ? <>
-                                <AuthInput
-                                    type='text'
-                                    text='Подтверждение пароля'
-                                    value={password2}
-                                    onChange={e => setPassword2(maskText(e.target.value))}
-                                />
-                                <AuthInput
-                                    type='text'
-                                    text='E-mail'
-                                    value={login}
-                                    onChange={e => setEmail(e.target.value)}
-                                />
-                            </> : null} 
+                {isLogin 
+                    ? <><AuthInput
+                            type='text'
+                            text='Почта или логин'
+                            value={login}
+                            onChange={e => setLogin(e.target.value)}
+                        />
+                        <AuthInput
+                            type='text'
+                            text='Пароль'
+                            value={password}
+                            onChange={e => setPassword(maskText(e.target.value))}
+                        /></> 
+                    : <><AuthInput
+                            type='text'
+                            text='Логин'
+                            value={login}
+                            onChange={e => setLogin(e.target.value)}
+                        />
+                        <AuthInput
+                            type='text'
+                            text='Пароль'
+                            value={password}
+                            onChange={e => setPassword(maskText(e.target.value))}
+                        /><AuthInput
+                            type='text'
+                            text='Подтверждение пароля'
+                            value={password2}
+                            onChange={e => setPassword2(maskText(e.target.value))}
+                        />
+                        <AuthInput
+                            type='text'
+                            text='E-mail'
+                            value={login}
+                            onChange={e => setEmail(e.target.value)}
+                        /></>}
                 <AuthButton onClick={(e) => e.preventDefault()}>
                     {isLogin ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
                 </AuthButton>
