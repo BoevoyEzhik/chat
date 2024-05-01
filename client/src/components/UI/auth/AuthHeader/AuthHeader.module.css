@@ -1,0 +1,15 @@
+.authHeader {
+    width: 75%;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    /* display: flex;
+    justify-content: space-between; */
+}
+
+.authHeader__text {
+    margin-bottom: 15px;
+    font-family: Montserrat;
+    color: white;
+    font-size: 32px;
+}

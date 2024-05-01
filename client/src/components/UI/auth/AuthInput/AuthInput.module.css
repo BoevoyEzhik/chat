@@ -1,0 +1,71 @@
+.authInputForm {
+    height: 54px;
+    width: 100%;
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.authInputLabel {
+    padding-left: 3px;
+    padding-right: 3px;
+    position: absolute;
+    color: #9e9e9e;
+    top: 20%;
+    left: 15%;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+    font-size: 14px;
+}
+
+.authInputField {
+    height: inherit;
+    width: 100%;
+    height: 2rem;
+    border: 1px solid #9e9e9e;
+    border-radius: 15px;
+    text-align: center;
+    z-index: 2;
+    color: #9e9e9e;
+}
+
+
+
+.authInputField:hover, .authInputField:hover + label {
+    color: #8774e1;
+    border-color: #8774e1;
+    transition-property: border-color, color;
+    transition-duration: 500ms;
+}
+
+.authInputField:hover {
+    color: #9e9e9e;
+}
+
+/* .authInputLabel:hover {
+    color: blueviolet
+} */
+
+.authInputField:focus {
+    color: #9e9e9e;
+    outline: none;
+    border: 1px solid #8774e1;
+}
+
+.authInputField:focus + label {
+    color: #8774e1;
+}
+
+.authInputText {
+    padding: 2px; 
+    color: inherit;
+    pointer-events: none;
+    user-select: none;
+}
+
+
+

@@ -1,5 +1,10 @@
 import React from 'react';
 import axios from 'axios';
+import './styles/App.css'
+import AuthInput from './components/UI/auth/AuthInput/AuthInput.jsx';
+import AuthButton from './components/UI/auth/AuthButton/AuthButton.jsx';
+import AuthHeader from './components/UI/auth/AuthHeader/AuthHeader.jsx';
+import AuthForm from './components/UI/auth/AuthForm/AuthForm.jsx';
 
 function App() {
 
@@ -10,9 +15,7 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={testGetReq}>
-        get
-      </button>
+      <AuthForm/>
     </div>
   );
 }
