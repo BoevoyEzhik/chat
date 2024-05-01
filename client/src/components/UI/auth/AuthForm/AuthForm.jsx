@@ -16,7 +16,7 @@ const AuthForm = () => {
 
     const register = (e) => {
         e.preventDefault()
-        setIsLogin(false)
+        setIsLogin(!isLogin)
     }
 
     return (
