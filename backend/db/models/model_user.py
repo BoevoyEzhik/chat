@@ -1,6 +1,7 @@
-from backend.db.models.base import BaseDBModel
+
 from sqlalchemy import Column, String
 
+from models.base import BaseDBModel
 
 Base = BaseDBModel
 
