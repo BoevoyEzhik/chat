@@ -3,6 +3,8 @@ import cl from './AuthForm.module.css'
 import AuthHeader from '../AuthHeader/AuthHeader.jsx';
 import AuthInput from '../AuthInput/AuthInput.jsx';
 import AuthButton from '../AuthButton/AuthButton.jsx';
+import { useFetching } from '../../../../hooks/useFetching.js';
+import AuthService from '../../../../API/AuthService.js';
 
 const AuthForm = () => {
 
@@ -11,13 +13,18 @@ const AuthForm = () => {
     const [login, setLogin] = useState('')
     const [email, setEmail] = useState('')
     const [isLogin, setIsLogin] = useState(true)
+    const [fetchRegister, isRegisterLoading, registerError] = useFetching(async () => {
+        const isRegisterOk = await AuthService.register();
+        setIsLogin(!isLogin)
+        console.log(isRegisterOk.data)
+    })
 
     const maskText = (text) => {
         return text.replaceAll(/./g, '*')
     }
 
     const register = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         setIsLogin(!isLogin)
     }
 
@@ -58,15 +65,16 @@ const AuthForm = () => {
                         <AuthInput
                             type='text'
                             text='E-mail'
-                            value={login}
+                            value={email}
                             onChange={e => setEmail(e.target.value)}
                         /></>}
-                <AuthButton onClick={(e) => e.preventDefault()}>
+                <AuthButton onClick={isLogin ? (e) => e.preventDefault() : (e) => fetchRegister(e)}>
                     {isLogin ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
                 </AuthButton>
             </form>
-             <AuthButton onClick={(e) => register(e)}>{isLogin ? 'РЕГИСТРАЦИЯ' : 'ВОЙТИ'}
-             </AuthButton>
+            {isLogin ? <AuthButton onClick={e => register(e)}>РЕГИСТРАЦИЯ
+             </AuthButton>: null}
+             
             
         </div>
         
