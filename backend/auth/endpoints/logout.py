@@ -1,8 +1,13 @@
 from starlette.responses import Response
-from backend.auth.auth_router import router
+from fastapi import APIRouter
 
 
-@router.get("/logout")
-async def register(response: Response):
+logout_router = APIRouter()
+
+
+@logout_router.get("/logout")
+async def logout(response: Response):
     response.delete_cookie('accessToken')
-    return {"message": "logout success  ", "session deleted": 'ok'}
+    return {'status_code': 200,
+            "message": "logout success",
+            "info": 'token deleted'}
