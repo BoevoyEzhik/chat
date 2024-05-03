@@ -3,8 +3,7 @@ driver = 'psycopg2'
 user = 'chat'
 password = 'chat'
 host = 'chat-db'
-localhost = 'localhost'
 dbname = 'chat'
 
 db_url = f'{dialect}+{driver}://{user}:{password}@{host}/{dbname}'
-local_db_url = f'{dialect}+{driver}://{user}:{password}@{localhost}/{dbname}'
+

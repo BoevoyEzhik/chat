@@ -1,7 +1,7 @@
 
 from sqlalchemy import Column, String
 
-from models.base import BaseDBModel
+from .base import BaseDBModel
 
 Base = BaseDBModel
 
