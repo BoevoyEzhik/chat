@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cl from './AuthForm.module.css'
 import AuthHeader from '../AuthHeader/AuthHeader.jsx';
 import AuthInput from '../AuthInput/AuthInput.jsx';
@@ -8,8 +8,10 @@ import AuthService from '../../../../API/AuthService.js';
 
 const AuthForm = () => {
 
-    const [password, setPassword] = useState('')
-    const [password2, setPassword2] = useState('')
+    const [originalPassword, setOriginalPassword] = useState('')
+    const [maskedPassword, setMaskedPassword] = useState('')
+    const [password2, setPassword2] = useState({})
+    const [isPassRight, setPassRight] = useState(true)
     const [login, setLogin] = useState('')
     const [email, setEmail] = useState('')
     const [isLogin, setIsLogin] = useState(true)
@@ -19,6 +21,26 @@ const AuthForm = () => {
         console.log(isRegisterOk.data)
     })
 
+    const [fetchLogin, isLoginLoading, loginError] = useFetching(async () => {
+        const isLoginOk = await AuthService.login(login, originalPassword);
+        setIsLogin(isLogin)
+        console.log(isLoginOk.data)
+    })
+
+    // useEffect(() => {   
+    //     console.log('Effect orig ' + originalPassword)
+    //     console.log('Effect mask ' + maskedPassword)
+    // }, [originalPassword, maskedPassword])
+
+    const handlePassword = (text) => {
+        if (!originalPassword) {
+            setOriginalPassword(text)
+        } else {
+            originalPassword.length < text.length ? setOriginalPassword(originalPassword + text[text.length-1]) : setOriginalPassword(originalPassword.slice(0, originalPassword.length-1)) 
+        }
+        setMaskedPassword(maskText(text))
+    }
+
     const maskText = (text) => {
         return text.replaceAll(/./g, '*')
     }
@@ -26,6 +48,23 @@ const AuthForm = () => {
     const register = (e) => {
         e.preventDefault();
         setIsLogin(!isLogin)
+    }
+
+    const checkLogin = (e) => {
+        e.preventDefault();
+        console.log("Orig pass " + originalPassword)
+        console.log("mask pass " + maskedPassword)
+    }
+
+    const tryToLogin = event => {
+        event.preventDefault()
+        AuthService.login(login, originalPassword)
+    }
+
+    const loginWithPrevent = (e, ...args) => {
+        console.log('@@@args ' + JSON.stringify(args))
+        e.preventDefault();
+        fetchLogin(...args)
     }
 
     return (
@@ -42,9 +81,11 @@ const AuthForm = () => {
                         <AuthInput
                             type='text'
                             text='Пароль'
-                            value={password}
-                            onChange={e => setPassword(maskText(e.target.value))}
-                        /></> 
+                            value={maskedPassword}
+                            onChange={e => handlePassword(e.target.value)}
+                        />
+                        {!isPassRight ? <span>Пароль должен содержать 4 символа или больше'</span> : ''} 
+                        </>
                     : <><AuthInput
                             type='text'
                             text='Логин'
@@ -54,7 +95,7 @@ const AuthForm = () => {
                         <AuthInput
                             type='text'
                             text='Пароль'
-                            value={password}
+                            value={maskedPassword}
                             onChange={e => setPassword(maskText(e.target.value))}
                         /><AuthInput
                             type='text'
@@ -68,7 +109,7 @@ const AuthForm = () => {
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         /></>}
-                <AuthButton onClick={isLogin ? (e) => e.preventDefault() : (e) => fetchRegister(e)}>
+                <AuthButton onClick={isLogin ? (e) => loginWithPrevent(e, login, originalPassword) : (e) => fetchRegister(e)}>
                     {isLogin ? 'ВОЙТИ' : 'ЗАРЕГИСТРИРОВАТЬСЯ'}
                 </AuthButton>
             </form>
