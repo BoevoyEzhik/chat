@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from backend.auth.endpoints import auth_app
 
@@ -6,6 +7,18 @@ from backend.db.create_tables import drop_create
 
 app = FastAPI()
 app.mount('/auth', auth_app.app)
+
+origins = [
+    'http://localhost:3000'
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*']
+)
 
 
 @app.get("/")
